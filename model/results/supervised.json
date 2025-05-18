@@ -1,0 +1,27 @@
+{
+  "regression": {
+    "knn": {
+      "metrics": {
+        "R2": 0,
+        "MAE": 0,
+        "D2MAE": 0
+      },
+      "cv_results": {
+        "MAE": [0, 0, 0, 0],
+        "best_k": 0
+      }
+    }
+  },
+  "classification": {
+    "knn": {
+      "metrics": {
+        "Accuracy": 0,
+        "f1": 0
+      },
+      "cv_results": {
+        "Accuracy": [0, 0, 0, 0],
+        "best_k": 0
+      }
+    }
+  }
+}
