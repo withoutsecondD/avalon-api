@@ -3,7 +3,50 @@ Avalon API backend application for DS&amp;ML Project \
 Includes utilization of supervised, unsupervised algorithms and Computer Vision using Neural Networks to solve Machine Learning tasks
 
 ## Installation
-TODO
+Clone the repository
+```
+git clone https://github.com/withoutsecondD/avalon-api.git
+```
+
+Setup venv and activate it
+```
+cd avalon-api
+python -m venv .venv
+
+source .venv/bin/activate
+or
+.\.venv\Scripts\activate (Windows)
+```
+
+Install requirements
+```
+pip install -r requirements.txt
+```
+
+Create .env file at the root of the project and fill following fields
+```
+# address of TF Serving container
+TF_SERVING_BASE_URL="http://localhost:8501"
+
+# set the same model name as in TF Serving container
+MODEL_NAME="smile"
+
+# address of frontend app, only needed for CORS 
+FRONTEND_ADDR="http://localhost:3000"
+
+# paths to results of supervised/unsupervised learning
+# algorithms results 
+PATH_TO_SUPERVISED_RESULTS="model/results/supervised.json"
+PATH_TO_UNSUPERVISED_RESULTS="model/results/unsupervised.json"
+```
+
+
+Go to api directory and run the app
+```
+fastapi dev api.py
+```
+
+Application will be available at `localhost:8000`
 
 ## Usage
 ### API
@@ -26,14 +69,22 @@ curl localhost:8000/resources/dummy.csv
 
 **`POST /predict`**
 
-After uploading a photo with a person, endpoint returns a new photo with bounding box that shows where the face is located with label `Result: Smiling` or `Result: Not smiling`
+After uploading a photo with a person, endpoint returns confidence score which represents how possible is that the person on uploaded photo is smiling 
 
 **Example request:** 
 - POST query with image as FormData \
 **Ensure that you append the file to FormData with key `image`**
 
 **Example response:**
-- Reponse body contains binary data of the jpg image
+```
+{
+  "data": {
+    "confidence": "93.31%"
+  },
+  "success": true,
+  "message": ""
+}
+```
 
 ---
 
@@ -77,31 +128,60 @@ Unsuccessfull response
 ```
 {
   "regression": {
-    "knn": {
-      "metrics": {
-        "R2": 0,
-        "MAE": 0,
-        "D2MAE": 0
-      },
+    "linear": {
+      "r2": 0.038026047739232904,
+      "rmse": 261.6237722008474,
+      "mae": 4.1611325886124755,
+      "mse": 261.6237722008474
+    },
+    "dtree_reg": {
+      "d2mae": 0.6506618433481275,
       "cv_results": {
-        "MAE": [0, 0, 0, 0],
-        "best_k": 0
+        "d2mae_results": [0.167, 0.187, ..., 0.644],
+        "best_maxdepth": 20
+      }
+    },
+    "randomforest_reg": {
+      "mae": 3.0555189593971828
+    },
+    "knn": {
+      "mae": 4.842358534082274,
+      "cv_results": {
+        "mae_results": [5.657, 5.190, ..., 4.873],
+        "best_k": 19
       }
     }
-    ...
   },
   "classification": {
-    "knn": {
-      "metrics": {
-        "Accuracy": 0,
-        "f1": 0
-      },
+    "logistic": {
+      "accuracy": 0.9508098380323935,
+      "roc_auc": 0.3973070708625067,
+      "log_loss": 0.6220748882638015
+    },
+    "dtree_clf": {
+      "accuracy": 0.978069498069498,
       "cv_results": {
-        "Accuracy": [0, 0, 0, 0],
-        "best_k": 0
+        "accuracy_results": [0.0, 0.794, 0.946, ..., 0.978],
+        "best_maxdepth": 5
       }
+    },
+    "randomforest_clf": {
+      "accuracy": 0.9994001199760048
+    },
+    "naiveB": {
+      "accuracy": 0.9070185962807439
+    },
+    "knn": {
+      "accuracy": 0.9524838275194425,
+      "cv_results": {
+        "accuracy_results": [0.908, 0.945, ..., 0.952],
+        "best_k": 9
+      }
+    },
+    "svc": {
+      "accuracy": 0.9508098380323935,
+      "f1_score": 0.0
     }
-    ...
   }
 }
 ```
