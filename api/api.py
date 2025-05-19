@@ -16,10 +16,8 @@ import requests
 from api.utils import construct_response
 
 
-ROOT_DIR = Path(dotenv.find_dotenv()).parent
-
 # load env variables
-dotenv.load_dotenv(f'{ROOT_DIR}/.env', override=True)
+dotenv.load_dotenv(override=True)
 TF_SERVING_BASE_URL = os.getenv('TF_SERVING_BASE_URL')
 FRONTEND_ADDRESS = os.getenv('FRONTEND_ADDR')
 MODEL_NAME = os.getenv('MODEL_NAME')
@@ -27,8 +25,14 @@ MODEL_NAME = os.getenv('MODEL_NAME')
 PATH_TO_SUPERVISED_RESULTS = os.getenv('PATH_TO_SUPERVISED_RESULTS')
 PATH_TO_UNSUPERVISED_RESULTS = os.getenv('PATH_TO_UNSUPERVISED_RESULTS')
 
+print(TF_SERVING_BASE_URL)
+print(FRONTEND_ADDRESS)
+print(MODEL_NAME)
+print(PATH_TO_SUPERVISED_RESULTS)
+print(PATH_TO_UNSUPERVISED_RESULTS)
+
 app = FastAPI()
-app.mount("/resources", StaticFiles(directory="../resources"), name="resources")
+app.mount("/resources", StaticFiles(directory="resources"), name="resources")
 
 # allow requests from frontend
 app.add_middleware(
@@ -64,10 +68,10 @@ async def predict(image:UploadFile=File(...)):
 @app.get('/results')
 def results(model:str):
     if model == 'supervised':
-        with open(f'{ROOT_DIR}/{PATH_TO_SUPERVISED_RESULTS}', 'r') as result:
+        with open(PATH_TO_SUPERVISED_RESULTS, 'r') as result:
             return construct_response(json.load(result))
     elif model == 'unsupervised':
-        with open(f'{ROOT_DIR}/{PATH_TO_UNSUPERVISED_RESULTS}', 'r') as result:
+        with open(PATH_TO_UNSUPERVISED_RESULTS, 'r') as result:
             return construct_response(json.load(result))
     else:
         raise RequestValidationError('unknown model selected')
