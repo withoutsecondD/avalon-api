@@ -1,4 +1,6 @@
 tensorflow
+jupyter
+ipykernel
 fastapi
 fastapi[standard]
 matplotlib
