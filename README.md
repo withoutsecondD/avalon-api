@@ -2,6 +2,12 @@
 Avalon API backend application for DS&amp;ML Project \
 Includes utilization of supervised, unsupervised algorithms and Computer Vision using Neural Networks to solve Machine Learning tasks
 
+Our project is dedicated for analyzing, building infrastructure and providing comprehensive UI for interaction to client, using those datasets: 
+
+* [Global Development indicators](https://www.kaggle.com/datasets/michaelmatta0/global-development-indicators-2000-2020) for supervised type of analysis
+* [UK Road Traffic Collision Dataset](https://www.kaggle.com/datasets/salmankhaliq22/road-traffic-collision-dataset) for unsupervised type of analysis
+* [CelebFaces Attributes (CelebA) Dataset](https://www.kaggle.com/datasets/jessicali9530/celeba-dataset?select=list_attr_celeba.csv) for training and validating the CNN MobilenetV2 for Computer Vision features extraction.
+
 ## Installation
 Clone the repository
 ```
