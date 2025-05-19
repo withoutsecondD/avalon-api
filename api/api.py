@@ -41,8 +41,15 @@ async def predict(image:UploadFile=File(...)):
 
 
 @app.get('/results')
-def results():
-    return construct_response({'hello': 'world'})
+def results(model:str):
+    if model == 'supervised':
+        return construct_response({'hello': 'world'})
+    elif model == 'unsupeervised':
+        return construct_response({'hello': 'world'})
+    elif model == 'nn':
+        return construct_response({'hello': 'world'})
+    else:
+        raise RequestValidationError('unknown model selected')
 
 
 @app.exception_handler(Exception)
