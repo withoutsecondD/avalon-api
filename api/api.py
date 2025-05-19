@@ -1,7 +1,11 @@
+import io
 import json
 from pathlib import Path
 import dotenv
 import os
+from tensorflow.keras.preprocessing import image as kerasimg
+import numpy as np
+from PIL import Image
 from fastapi import FastAPI, File, Request, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -40,11 +44,21 @@ app.add_middleware(
 async def predict(image:UploadFile=File(...)):
     image_bytes = await image.read()
 
-    print(image_bytes)
     if len(image_bytes) > 10 * 1024 * 1024:
         return RequestValidationError('file too large')
 
-    return construct_response(image_bytes[:100])
+    img = kerasimg.load_img(io.BytesIO(image_bytes), target_size=(224, 224))
+    img_arr = kerasimg.img_to_array(img) / 255.0
+    img_arr = np.expand_dims(img_arr, axis=0)
+
+    tensor = img_arr.tolist()
+
+    prediction_resp = requests.post(f'{TF_SERVING_BASE_URL}/v1/models/{MODEL_NAME}:predict', json={"instances": tensor})
+    resp = {
+        'confidence': f'{(float(prediction_resp.json()['predictions'][0][0]) * 100):.2f}%'
+    }
+
+    return construct_response(resp)
 
 
 @app.get('/results')
