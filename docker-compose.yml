@@ -16,7 +16,7 @@ services:
       - PATH_TO_UNSUPERVISED_RESULTS=model/results/unsupervised.json
 
   tf-serving:
-    image: tensorflow/serving
+    image: tensorflow/serving # use emacski/tensorflow-serving image if on ARM arch
     ports:
       - "8501:8501"
     networks:

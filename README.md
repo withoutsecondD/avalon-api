@@ -195,30 +195,53 @@ Unsuccessfull response
 - `unsupervised:`
 ```
 {
-  "decomposition": {
-    "pca": {
-      "explained_variance_ratio": [],
-      "noise_variance": 0,
-      "n_components": 0,
-      "Accuracy": 0,
-      "f1_score": 0,
-      "roc_curve": {
-        "tpr": [0, 0, 0, 0],
-        "fpr": [0, 0, 0, 0]
-      },
-      "roc_auc": 0
-    }
-  },
-  "clustering": {
-    "inertia_results": [0, 0, 0, 0],
-    "Accuracy": 0,
-    "f1_score": 0,
-    "roc_curve": {
-      "tpr": [0, 0, 0, 0],
-      "fpr": [0, 0, 0, 0]
+    "decomposition": {
+        "pca": {
+            "explained_variance_ratio": [
+                0.17691734853507976,
+                0.06470805720522751,
+                0.0615497440233952,
+                0.05049413014730652,
+                0.04790211649338024
+            ],
+            "noise_variance": 0.0012627757554276168,
+            "n_components": 5,
+            "accuracy": 0.8977539389875964,
+            "f1_score": 0.31537419772713887
+        },
+        "nmf": {
+            "explained_variance_ratio": [
+                0.17691734853507976,
+                0.06470805720522751,
+                0.0615497440233952,
+                0.05049413014730652,
+                0.04790211649338024
+            ],
+            "noise_variance": 0.0012627757554276168,
+            "n_components": 5,
+            "accuracy": 0.8977539389875964,
+            "f1_score": 0.31537419772713887
+        },
+        "isomap": {
+            "n_components": 5,
+            "accuracy": 0.8977539389875964,
+            "f1_score": 0.31537419772713887
+        },
+        "tsne": {
+            "n_components": 5,
+            "accuracy": 0.8977539389875964,
+            "f1_score": 0.31537419772713887
+        }
     },
-    "roc_auc": 0
-  }
-  ...
+    "clustering": {
+        "inertia_results": [
+            58016.19292814988,
+            51369.142981542005,
+            43204.366726449094,
+            38669.96911231872
+        ],
+        "accuracy": 0.8977539389875964,
+        "f1_score": 0.31537419772713887
+    }
 }
 ```
