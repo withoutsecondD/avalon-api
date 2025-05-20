@@ -9,6 +9,17 @@ Our project is dedicated for analyzing, building infrastructure and providing co
 * [CelebFaces Attributes (CelebA) Dataset](https://www.kaggle.com/datasets/jessicali9530/celeba-dataset?select=list_attr_celeba.csv) for training and validating the CNN MobilenetV2 for Computer Vision features extraction.
 
 ## Installation
+### Docker Compose
+Simply run in the root directory of the project:
+```
+docker compose up --build
+```
+That's all, application will be available at `localhost:8000`
+
+**Note**: If you have ARM arch, change the image of tf-serving service in docker-compose.yml to `emacski/tensorflow-serving`
+
+
+### Manual
 Clone the repository
 ```
 git clone https://github.com/withoutsecondD/avalon-api.git
